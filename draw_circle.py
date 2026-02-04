@@ -7,7 +7,7 @@ from geometry_msgs.msg import Twist
 
 class Circledrawer(Node):
     def __init__(self):
-        super().__init__('circle_drawer_node')
+        super().__init__('circle_drawer_node')#节点名称'circle_drawer_node'
         # 创建发布者 (Publisher)
         # 含义：我要对着 '/turtle1/cmd_vel' 这个大喇叭喊话
         # 消息类型是 Twist，队列长度 10
