@@ -1,6 +1,6 @@
 # 🐢 ROS 2 Autonomous Wall-Following & Corner-Escape System
 > **基于 ROS 2 的移动机器人自主贴墙与角落逃逸算法实现**
-> <img width="550" height="599" alt="Screenshot from 2026-02-05 14-53-07" src="https://github.com/user-attachments/assets/86eeecb0-4521-468c-9387-d9c623743416" />
+img width="550" height="599" alt="Screenshot from 2026-02-05 14-53-07" src="https://github.com/user-attachments/assets/86eeecb0-4521-468c-9387-d9c623743416" />
 
 
 ## 📖 项目背景 (Background)
