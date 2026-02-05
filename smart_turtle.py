@@ -32,32 +32,36 @@ class smartturtle(Node):
         #创建Twist类实例cmd用于塞给self.publisher
         cmd = Twist()
         # 边界判断：turtlesim 的屏幕宽度大概是 11.08
-        dis_x  = abs(min(current_x,abs(current_x - 11.08)))
-        dis_y  = abs(min(current_y,abs(current_y - 11.08)))
+        dis_x  = abs(min(current_x,abs(current_x - 11.09)))
+        dis_y  = abs(min(current_y,abs(current_y - 11.09)))
         clo_dis = min(dis_x,dis_y)
         pi = math.pi
 
-        if 1.2> dis_x>1.0 or 1.2> dis_y >1.0:
+        if 2> dis_x or 2> dis_y :
              if (abs(dis_x-dis_y))<=0.1:
-                     if abs(current_th - 0)<=0.1 or abs(current_th - 1.57)<=0.1 or abs(current_th - 3.14)<=0.1 or abs(current_th - -1.57)<=0.1:
-                         cmd.angular.z = 1.0
-                         cmd.linear.x = 0.0 
-                     elif not (abs(current_th - 0)<=0.1 or abs(current_th - 1.57)<=0.1 or abs(current_th - 3.14)<=0.1 or abs(current_th - -1.57)<=0.1):
-                         cmd.angular.z = 1.0
-                         cmd.linear.x = 0.0
-                     else:
-                         cmd.linear.x = 1.0
-                         cmd.angular.z = 0.0 
-             else:
-                 if not (abs(current_th - 0)<=0.1 or abs(current_th - 1.57)<=0.1 or abs(current_th - 3.14)<=0.1 or abs(current_th - -1.57)<=0.1):
+                 if not (abs(current_th - 0)<=0.2 or abs(current_th - 1.57)<=0.2 or abs(current_th - 3.14)<=0.2 or abs(current_th - -1.57)<=0.2):
                      cmd.angular.z = 1.0
                      cmd.linear.x = 0.0
+                     print('我的方向不对要转弯')   
+                 else :
+                     cmd.linear.x = 0.5
+                     cmd.angular.z = 0.5
+                     print('贴边但是方向不对,破坏方向和角点触发自动修正')
+                     
+             else:
+                 if not (abs(current_th - 0)<=0.11 or abs(current_th - 1.57)<=0.11 or abs(current_th - 3.14)<=0.11 or abs(current_th - -1.57)<=0.11):
+                     cmd.angular.z = 1.0
+                     cmd.linear.x = 0.0
+                     print('修正方向中')
                  else:
                      cmd.linear.x = 1.0
                      cmd.angular.z = 0.0 
+                     print('我没到角')
         else:
+             
              cmd.linear.x = 1.0*clo_dis*p
              cmd.angular.z = 0.0 
+             print('没到边界直走')
         
 
 
