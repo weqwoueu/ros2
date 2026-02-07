@@ -31,7 +31,7 @@
     <!-- 转动惯量-->
      <inertial>
        <mass value = "5.0"/><!--kg-->
-       <inertial ixx = "0.08" ixy="0" ixz="0" iyy = "0.16" iyz = "0" izz ="0.2"/>
+       <inertia ixx = "0.08" ixy="0" ixz="0" iyy = "0.16" iyz = "0" izz ="0.2"/>
      </inertial>
   </link>
  
@@ -56,7 +56,7 @@
     <!--转动惯量-->
     <inertial>
      <mass value = "1.0"/>
-     <inertial ixx = "0,0027" ixy = "0" ixz = "0" iyy = "0.0027" iyz = "0" izz = "0.005"/>
+     <inertia ixx = "0.0027" ixy = "0" ixz = "0" iyy = "0.0027" iyz = "0" izz = "0.005"/>
     </inertial>
   </link>
 
@@ -78,7 +78,7 @@
     <!--转动惯量-->
     <inertial>
      <mass value = "1.0"/>
-     <inertial ixx = "0,0027" ixy = "0" ixz = "0" iyy = "0.0027" iyz = "0" izz = "0.005"/>
+     <inertia ixx = "0.0027" ixy = "0" ixz = "0" iyy = "0.0027" iyz = "0" izz = "0.005"/>
     </inertial>
   </link>
 
@@ -100,6 +100,7 @@
   </joint>
 
 
+  
 
 <!--/代表闭合块<cylinder length = "0.06" radius="0.05"/> == <cylinder length = "0.06" radius="0.05"> </cylinder-->
 <!--每一个块闭合时都要有此块的名称<>如<visual>...</visual>才算闭合或者简写为<visual.../>-->>
