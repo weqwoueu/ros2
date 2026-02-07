@@ -41,7 +41,8 @@
   <link name="right_wheel">
     <visual>
       <geometry>
-        
+        <cylinder length="0.05" radius="0.1"/> <!-- 半径0.1 厚0.05 的圆柱 -->
+      </geometry>
       <material name="black"/>
     </visual>
 
@@ -117,5 +118,27 @@
     <child link = "lidar"/>
     <origin xyz ="0.3 0 0.13"/>
   </joint>
+
+  <!--gazibo差速驱动插件-->
+  <gazebo>
+   <plugin filename="gz-sim-diff-drive-system" name = "gz::sim::systems::DiffDrive">
+   <!--接线告诉插件哪个是左轮哪个是右轮-->
+   <left_joint>base_to_left_wheel</left_joint>
+   <right_joint>base_to_right_wheel</right_joint>
+
+    <!--轮距和轮径-->
+    <wheel_separation>0.45</wheel_separation>
+    <wheel_radius>0.1</wheel_radius>
+
+    <!-- 控制参数编码器采样频率-->
+    <odom_publish_frequency>50</odom_publish_frequency>  
+
+    <!--只要有任何节点（比如键盘控制节点、或者你的 PPO 神经网络）往 cmd_vel 发送 Twist 消息，这个插件就会立刻截获，并算出左右轮的转速，驱动模型运动。-->
+    <topic>cmd_vel</topic>
+
+   </plugin>
+   
+  </gazebo>
+
 
 </robot>
