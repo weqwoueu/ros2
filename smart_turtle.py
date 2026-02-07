@@ -31,7 +31,7 @@ class smartturtle(Node):
 
         #创建Twist类实例cmd用于塞给self.publisher
         cmd = Twist()
-        # 边界判断：turtlesim 的屏幕宽度大概是 11.08
+        # 边界判断：turtlesim 的屏幕宽度大概是 11.09
         dis_x  = abs(min(current_x,abs(current_x - 11.09)))
         dis_y  = abs(min(current_y,abs(current_y - 11.09)))
         clo_dis = min(dis_x,dis_y)
