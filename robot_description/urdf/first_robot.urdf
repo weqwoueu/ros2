@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<robot name="first_bot">
+
+  <!-- 1. 定义材质颜色 -->
+  <material name="blue">
+    <color rgba="0 0 0.8 1"/>
+  </material>
+  <material name="black">
+    <color rgba="0 0 0 1"/>
+  </material>
+  <material name ="red">
+    <color rgba = "1 0 0 1"/>
+  </material>
+
+  <!-- 2. Base Link (底盘) -->
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.6 0.4 0.2"/> <!-- 长0.6 宽0.4 高0.2 的方块 -->
+      </geometry>
+      <material name="blue"/>
+    </visual>
+
+    <!--碰撞体积-->
+    <collision>
+      <geometry>
+        <box size="0.6 0.4 0.2"/> <!-- 长0.6 宽0.4 高0.2 的方块 -->
+      </geometry>
+    </collision>
+
+    <!-- 转动惯量-->
+    <iner>
+      <mass value = "5.0"><!--kg-->
+      <>
+
+
+
+  </link>
+ 
+  
+
+  <!-- 3. Right Wheel (右轮) -->
+  <link name="right_wheel">
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.1"/> <!-- 半径0.1 厚0.05 的圆柱 -->
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+  <!-- 4. Left Wheel (左轮) -->
+  <link name="left_wheel">
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.1"/>
+      </geometry>
+      <material name="black"/>
+    </visual>
+  </link>
+
+  <!-- 5. Joint: 把右轮装到底盘上 -->
+  <joint name="base_to_right_wheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="right_wheel"/>
+    <!-- 安装位置: x=0.2, y=-0.22 (右侧), z=-0.1 (底部) -->
+    <origin xyz="0.2 -0.225 -0.1" rpy="1.5707 0 0"/> <!-- rpy: 旋转90度让轮子立起来 -->
+    <axis xyz="0 0 -1"/> <!-- 旋转轴 -->
+  </joint>
+
+  <!-- 6. Joint: 把左轮装到底盘上 -->
+  <joint name="base_to_left_wheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="left_wheel"/>
+    <origin xyz="0.2 0.225 -0.1" rpy="1.5707 0 0"/>
+    <axis xyz="0 0 -1"/>
+  </joint>
+
+
+
+<!--/代表闭合块<cylinder length = "0.06" radius="0.05"/> == <cylinder length = "0.06" radius="0.05"> </cylinder-->
+<!--每一个块闭合时都要有此块的名称<>如<visual>...</visual>才算闭合或者简写为<visual.../>-->>
+<!--画个雷达-->
+  <link name = "lidar">
+    <visual>
+      <geometry>
+        <cylinder length = "0.06" radius="0.05"/>
+      </geometry>
+      <material name = "red"/>
+    </visual>
+  </link>  
+  <!--装配雷达-->
+  <joint name = "base_to_lidar" type = "fixed">
+    <parent link = "base_link"/>
+    <child link = "lidar"/>
+    <origin xyz ="0.3 0 0.13"/>
+  </joint>
+
+</robot>
