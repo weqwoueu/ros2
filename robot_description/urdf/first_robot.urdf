@@ -82,6 +82,40 @@
     </inertial>
   </link>
 
+  <!--画个雷达-->
+  <link name = "lidar">
+    <visual>
+      <geometry>
+        <cylinder length = "0.06" radius="0.05"/>
+      </geometry>
+      <material name = "red"/>
+    </visual>
+  </link>  
+
+  <!--画个万向轮-->
+  <link name = "caster_wheel">
+    <visual>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+      <material name="black">
+      </material>
+    </visual>
+
+    <collision>
+      <geometry>
+        <sphere radius="0.05"/>
+      </geometry>
+    </collision>
+
+    <inertial>
+      <mass value ="2"/>
+      <inertia ixx="0.001" ixy="0" ixz="0" iyy="0.001" iyz="0" izz="0.001"/>
+    </inertial>
+  </link>
+
+
+
   <!-- 5. Joint: 把右轮装到底盘上 -->
   <joint name="base_to_right_wheel" type="continuous">
     <parent link="base_link"/>
@@ -90,6 +124,8 @@
     <origin xyz="0.2 -0.225 -0.1" rpy="1.5707 0 0"/> <!-- rpy: 旋转90度让轮子立起来 -->
     <axis xyz="0 0 -1"/> <!-- 旋转轴 -->
   </joint>
+
+
 
   <!-- 6. Joint: 把左轮装到底盘上 -->
   <joint name="base_to_left_wheel" type="continuous">
@@ -100,25 +136,33 @@
   </joint>
 
 
-  
-
 <!--/代表闭合块<cylinder length = "0.06" radius="0.05"/> == <cylinder length = "0.06" radius="0.05"> </cylinder-->
 <!--每一个块闭合时都要有此块的名称<>如<visual>...</visual>才算闭合或者简写为<visual.../>-->>
-<!--画个雷达-->
-  <link name = "lidar">
-    <visual>
-      <geometry>
-        <cylinder length = "0.06" radius="0.05"/>
-      </geometry>
-      <material name = "red"/>
-    </visual>
-  </link>  
+
   <!--装配雷达-->
   <joint name = "base_to_lidar" type = "fixed">
     <parent link = "base_link"/>
     <child link = "lidar"/>
     <origin xyz ="0.3 0 0.13"/>
   </joint>
+
+  <!-- 装配万向轮 -->
+  <joint name="base_to_caster_wheel" type="fixed">
+    <parent link="base_link" />
+    <child link="caster_wheel" />
+    <origin xyz="-0.225 0 -0.15"  />
+  </joint>
+
+
+
+  <!-- 万向轮物理属性：无摩擦 -->
+  <gazebo reference = "caster_wheel">
+    <mu1>0.001</mu1><!-- 摩擦系数设得极小 -->
+    <mu2>0.001</mu2>
+    <material>Gazebo/Black</material>
+  </gazebo>
+
+
 
   <!--gazibo差速驱动插件-->
   <gazebo>
