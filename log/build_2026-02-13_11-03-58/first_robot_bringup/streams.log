@@ -1,0 +1,34 @@
+[0.716s] Invoking command in '/home/liu/learn/ros2/first_robot_bringup': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/liu/learn/ros2/build/first_robot_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/liu/learn/ros2/install/first_robot_bringup/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/first_robot_bringup build --build-base /home/liu/learn/ros2/build/first_robot_bringup/build install --record /home/liu/learn/ros2/build/first_robot_bringup/install.log --single-version-externally-managed install_data
+[0.922s] running egg_info
+[0.922s] creating ../build/first_robot_bringup/first_robot_bringup.egg-info
+[0.937s] writing ../build/first_robot_bringup/first_robot_bringup.egg-info/PKG-INFO
+[0.937s] writing dependency_links to ../build/first_robot_bringup/first_robot_bringup.egg-info/dependency_links.txt
+[0.938s] writing requirements to ../build/first_robot_bringup/first_robot_bringup.egg-info/requires.txt
+[0.938s] writing top-level names to ../build/first_robot_bringup/first_robot_bringup.egg-info/top_level.txt
+[0.938s] writing manifest file '../build/first_robot_bringup/first_robot_bringup.egg-info/SOURCES.txt'
+[0.969s] reading manifest file '../build/first_robot_bringup/first_robot_bringup.egg-info/SOURCES.txt'
+[0.969s] writing manifest file '../build/first_robot_bringup/first_robot_bringup.egg-info/SOURCES.txt'
+[0.969s] running build
+[0.969s] running build_py
+[0.969s] creating /home/liu/learn/ros2/build/first_robot_bringup/build
+[0.969s] creating /home/liu/learn/ros2/build/first_robot_bringup/build/lib
+[0.969s] creating /home/liu/learn/ros2/build/first_robot_bringup/build/lib/first_robot_bringup
+[0.970s] copying first_robot_bringup/__init__.py -> /home/liu/learn/ros2/build/first_robot_bringup/build/lib/first_robot_bringup
+[0.970s] running install
+[0.974s] running install_lib
+[0.990s] creating /home/liu/learn/ros2/install/first_robot_bringup/lib/python3.12/site-packages/first_robot_bringup
+[0.990s] copying /home/liu/learn/ros2/build/first_robot_bringup/build/lib/first_robot_bringup/__init__.py -> /home/liu/learn/ros2/install/first_robot_bringup/lib/python3.12/site-packages/first_robot_bringup
+[0.991s] byte-compiling /home/liu/learn/ros2/install/first_robot_bringup/lib/python3.12/site-packages/first_robot_bringup/__init__.py to __init__.cpython-312.pyc
+[0.991s] running install_data
+[0.991s] creating /home/liu/learn/ros2/install/first_robot_bringup/share/ament_index
+[0.991s] creating /home/liu/learn/ros2/install/first_robot_bringup/share/ament_index/resource_index
+[0.991s] creating /home/liu/learn/ros2/install/first_robot_bringup/share/ament_index/resource_index/packages
+[0.991s] copying resource/first_robot_bringup -> /home/liu/learn/ros2/install/first_robot_bringup/share/ament_index/resource_index/packages
+[0.991s] copying package.xml -> /home/liu/learn/ros2/install/first_robot_bringup/share/first_robot_bringup
+[0.991s] creating /home/liu/learn/ros2/install/first_robot_bringup/share/first_robot_bringup/launch
+[0.991s] copying launch/sim.launch.py -> /home/liu/learn/ros2/install/first_robot_bringup/share/first_robot_bringup/launch
+[0.991s] running install_egg_info
+[1.008s] Copying ../build/first_robot_bringup/first_robot_bringup.egg-info to /home/liu/learn/ros2/install/first_robot_bringup/lib/python3.12/site-packages/first_robot_bringup-0.0.0-py3.12.egg-info
+[1.009s] running install_scripts
+[1.117s] writing list of installed files to '/home/liu/learn/ros2/build/first_robot_bringup/install.log'
+[1.138s] Invoked command in '/home/liu/learn/ros2/first_robot_bringup' returned '0': DEBUGINFOD_URLS=https://debuginfod.ubuntu.com PYTHONPATH=/home/liu/learn/ros2/build/first_robot_bringup/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/liu/learn/ros2/install/first_robot_bringup/lib/python3.12/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py egg_info --egg-base ../build/first_robot_bringup build --build-base /home/liu/learn/ros2/build/first_robot_bringup/build install --record /home/liu/learn/ros2/build/first_robot_bringup/install.log --single-version-externally-managed install_data
