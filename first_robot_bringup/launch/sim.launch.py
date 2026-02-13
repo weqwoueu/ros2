@@ -47,9 +47,18 @@ def generate_launch_description():
     bridge = Node(
         package='ros_gz_bridge',
         executable='parameter_bridge',
-        arguments=['/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist'],
-        output='screen'
-    )
+        arguments=['/cmd_vel@geometry_msgs/msg/Twist@gz.msgs.Twist',#速度指令ros--->gazebo
+                   
+                   #激光雷达数据gazebo--->ros
+                   #格式：/scan @ros类型 @ gazebo类型
+                   '/scan@sensor_msgs/msg/LaserScan@gz.msgs.LaserScan',
+
+                   #tf坐标变换（gazebo——>ros）
+                   '/model/first_robot/tf@tf2_msgs/msg/TFMessage@gz.msgs.Pose_V'
+                   ],
+        output='screen',
+        remappings=[('/model/first_robot/tf',  '/tf')] 
+        )
 
     # 6. 键盘控制 (Teleop)
     # 为了方便，让他单独弹出一个新终端窗口运行

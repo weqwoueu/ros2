@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<robot name="first_bot">
+<robot name="first_robot">
 
   <!-- 1. 定义材质颜色 -->
   <material name="blue">
@@ -143,7 +143,7 @@
   <joint name = "base_to_lidar" type = "fixed">
     <parent link = "base_link"/>
     <child link = "lidar"/>
-    <origin xyz ="0.3 0 0.13"/>
+    <origin xyz ="0.2 0 0.15"/>
   </joint>
 
   <!-- 装配万向轮 -->
@@ -175,6 +175,11 @@
     <wheel_separation>0.45</wheel_separation>
     <wheel_radius>0.1</wheel_radius>
 
+    <!--加大最大线加还有角加-->
+    <max_linear_acceleration>5.0</max_linear_acceleration>
+    <max_angular_acceleration>10.0</max_angular_acceleration>
+
+
     <!-- 控制参数编码器采样频率-->
     <odom_publish_frequency>50</odom_publish_frequency>  
 
@@ -184,6 +189,37 @@
    </plugin>
    
   </gazebo>
+
+  <!-- 雷达插件-->
+  <gazebo reference = "lidar">
+    <!-- 声明这是一个传感器，类型是ray-->
+    <sensor name ="lidar" type="gpu_lidar">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize><!-- 是否显示射线-->
+      <update_rate>10</update_rate><!-- 刷新率10hz(一秒扫10次)-->
+      <topic>scan</topic> 
+      <!--ray的参数-->
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples><!-- 采样点数量一圈-->
+            <resolution>1</resolution>
+            <min_angle>-3.14</min_angle><!-- 扫描范围从负pi到pi-->
+            <max_angle>3.14</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.10</min><!-- 可视范围-->
+          <max>10.0</max>
+        </range>
+      </ray>
+      <plugin filename = "gz-sim-sensors-system" name = "gz::sim::systems::Sensors">
+        <render_engine>ogre2</render_engine>
+        <frame_id>lidar</frame_id>
+      </plugin>
+    </sensor>
+  </gazebo>
+
 
 
 </robot>
