@@ -215,7 +215,7 @@
       </ray>
       <plugin filename = "gz-sim-sensors-system" name = "gz::sim::systems::Sensors">
         <render_engine>ogre2</render_engine>
-        <frame_id>lidar</frame_id>
+        <frame_id>lidar</frame_id> <!-- 不知道为什么没有用-->
       </plugin>
     </sensor>
   </gazebo>

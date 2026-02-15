@@ -70,11 +70,19 @@ def generate_launch_description():
         output='screen'
     )
 
+    tf_patch = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        arguments=['0', '0', '0', '0', '0', '0', 'lidar', 'first_robot/base_link/lidar'],
+        output='screen'
+    )
+
     # 返回描述，告诉 ROS 2 要启动哪些东西
     return LaunchDescription([
         gazebo,
         rsp,
         spawn,
         bridge,
-        teleop
+        teleop,
+        tf_patch,
     ])
