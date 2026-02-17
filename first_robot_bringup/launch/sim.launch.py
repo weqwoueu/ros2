@@ -83,6 +83,6 @@ def generate_launch_description():
         rsp,
         spawn,
         bridge,
-        teleop,
+        #teleop,
         tf_patch,
     ])
