@@ -64,8 +64,15 @@ def main(args=None):
     try:
         rclpy.spin(node)
     except KeyboardInterrupt:
+        print('节点关闭开始刹车')
         blank_cmd = Twist()
-        node.publisher_.publish(blank_cmd)#安全逻辑，当键盘插入时发布全0指令防止车乱爬
+        blank_cmd.angular.z = 0.0
+        blank_cmd.linear.x = 0.0
+        for i in range(10):
+            node.publisher_.publish(blank_cmd)#安全逻辑，当键盘插入时发布全0指令防止车乱爬
+            import time
+            time.sleep(0.1)
+        print('已发布停止命令10次')
     finally:
         node.destroy_node()# 5. 资源回收
         rclpy.shutdown()
