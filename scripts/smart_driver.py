@@ -14,7 +14,7 @@ class smartdriver(Node):
             10#缓冲区：如果处理不过来，最多暂存10帧数据
             )
         
-        self.publisher = self.create_publisher(
+        self.publisher_ = self.create_publisher(
             Twist,#数据类型
             '/cmd_vel',#发布到哪里
             10#缓冲区
@@ -24,9 +24,9 @@ class smartdriver(Node):
      #转弯逻辑部分
         yuan = [msg.ranges]
         range = [l if l <=10.0 else 10.0 for l in msg.ranges]#清洗数据，msg.ranges是长360的数组测量范围是0.1到10详见urdf
-        front = range[0:30] + range[330:len(range)]
-        left = range[30:90]
-        right = range[270:330]
+        front = range[150:210]
+        left = range[210:270]
+        right = range[90:150]
 
         min_dis = min(min(front),min(left),min(right))
         print(min_dis)
@@ -53,7 +53,7 @@ class smartdriver(Node):
             cmd.linear.x = 0.5
             cmd.angular.z = 0.0
             #执行
-        self.publisher.publish(cmd)
+        self.publisher_.publish(cmd)
 
 
 
@@ -62,9 +62,10 @@ def main(args=None):
     node = smartdriver()## 实例化
     #启动节点
     try:
-      rclpy.spin(node)
+        rclpy.spin(node)
     except KeyboardInterrupt:
-        node.publisher.publish(Twist())#安全逻辑，当键盘插入时发布全0指令防止车乱爬
+        blank_cmd = Twist()
+        node.publisher_.publish(blank_cmd)#安全逻辑，当键盘插入时发布全0指令防止车乱爬
     finally:
         node.destroy_node()# 5. 资源回收
         rclpy.shutdown()
