@@ -22,7 +22,7 @@ class smartdriver(Node):
         print('节点实例创建成功')
     def scan_callback(self ,msg):
      #转弯逻辑部分
-        yuan = [msg.ranges]
+        yuan = [msg.ranges]#调试用 
         range = [l if l <=10.0 else 10.0 for l in msg.ranges]#清洗数据，msg.ranges是长360的数组测量范围是0.1到10详见urdf
         front = range[150:210]
         left = range[210:270]
