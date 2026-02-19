@@ -63,13 +63,14 @@ def main(args=None):
     #启动节点
     try:
         rclpy.spin(node)
+    #这部分没用的
     except KeyboardInterrupt:
         print('节点关闭开始刹车')
         blank_cmd = Twist()
         blank_cmd.angular.z = 0.0
         blank_cmd.linear.x = 0.0
         for i in range(10):
-            node.publisher_.publish(blank_cmd)#安全逻辑，当键盘插入时发布全0指令防止车乱爬
+            node.publisher_.publish(blank_cmd) #安全逻辑，当键盘插入时发布全0指令防止车乱爬
             import time
             time.sleep(0.1)
         print('已发布停止命令10次')
