@@ -40,9 +40,45 @@ class aidriver(Node):
             else:
                 observation.append(10.0)
         observation = np.array(observation[:24])#防止obser爆格曲前24个
-
+        # action是 [-1, 1] 之间的浮点数
         action ,_states = self.model.predict(observation , deterministic=True)# deterministic=True: 考试模式，不要随机探索，选概率最大的动作
         cmd = Twist()#创建空白指令
+
+        #action是一个小于1的两元素数列分别代表线和角的最大速度比例
+        if len(action) > 0:
+            raw_linear = action[0]
+            raw_angular = action[1]
+        else:
+            raw_linear = action[0]
+
+        #np.clip(数据, 最小值, 最大值) 限幅
+        cmd.angular.z = np.clip(raw_angular,-1.0,1.0)*1.0
+        cmd.linear.x = np.clip(raw_linear,0.0,1.0)*0.6
+
+        self.publisher.publish(cmd)
+
+        print(f"线速度,,{cmd.linear.x},    角速度,,{cmd.angular.z}")
+    
+def main(args=None):
+    rclpy.init(args=args)
+    node = aidriver()
+    try:
+        rclpy.spin(node)
+    except KeyboardInterrupt:
+        node.publisher.publish(Twist())
+    finally:
+        node.destroy_node()
+        rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+
+
+        
+
+
+
+        
         
 
 
