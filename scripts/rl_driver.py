@@ -7,11 +7,11 @@ import torch
 from stable_baselines3 import PPO
 
 class aidriver(Node):
-    def __init__(self,):
+    def __init__(self):
         super().__init__('rl_driver')
 
         #加载训练好的模型
-        modle_path = '/home/liu/learn/ros2/models/rl_driver_model.zip' #modle路径
+        modle_path = "/home/liu/learn/ros2/models/test_model.zip" #modle路径
 
         try:
             self.model = PPO.load(modle_path)
@@ -21,7 +21,7 @@ class aidriver(Node):
             self.model = None
 
         self.publisher = self.create_publisher(Twist,'/cmd_vel',10)
-        self.subscription = self.create_subscription(LaserScan,'/scen',self.callback,10)
+        self.subscription = self.create_subscription(LaserScan,'/scan',self.callback,10)
     def callback(self,msg):
         if self.model == None:
             return
@@ -63,9 +63,16 @@ def main(args=None):
     rclpy.init(args=args)
     node = aidriver()
     try:
-        rclpy.spin(node)
+        while rclpy.ok():
+            rclpy.spin_once(node, timeout_sec=0.1)
     except KeyboardInterrupt:
-        node.publisher.publish(Twist())
+        print('接收到停止信号！准备紧急刹车！')
+        # 连发 5 次刹车指令确保停稳
+        for _ in range(5):
+            node.publisher.publish(Twist())
+            import time
+            time.sleep(0.05)
+        print('刹车完毕。')
     finally:
         node.destroy_node()
         rclpy.shutdown()
