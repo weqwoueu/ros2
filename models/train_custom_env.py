@@ -7,7 +7,7 @@ class simplelidarenv(gym.Env):
     def __init__(self):
         super().__init__()
         #感觉器官
-        #24个雷达数据范围从0到10
+        #24个雷达数据范围从0到10#该为3个数据
         self.observation_space = spaces.Box(low= 0.0 , high= 10.0 ,shape=(24,),dtype=np.float32)
         #运动神经
         #线速度和角速度范围从-1到1
@@ -24,14 +24,14 @@ class simplelidarenv(gym.Env):
         super().reset(seed=seed)
         self.step_count = 0
         #随机生成考场地形 
-        #生成 24 个介于 2.0 到 10.0 之间的随机小数
+        #生成 3 个介于 2.0 到 10.0 之间的随机小数
         self.current_scan = np.random.uniform(2.0,10.0,24)
 
-            #随机将24个墙里面的一个突然放到0.5米上
+            #随机将3个墙里面的一个突然放到0.5米上(0=前, 1=左, 2=右)
             #让它一出生就必须学会猛打方向盘逃生
         wall_idx = np.random.randint(0,24)
         self.current_scan[wall_idx]= 0.5 
-            #返回生成的24个墙
+            #返回生成的3个墙
         return self.current_scan.astype(np.float32),{}#.astype(np.float32)强行转化为与observation_space同格式#一个空字典 {}。甲方规定的预留接口，不能省。
     
 
@@ -42,11 +42,21 @@ class simplelidarenv(gym.Env):
         v = action[0]
         w = action[1]           
 
-            #定义物理规则（非常暴力前进就有墙靠近，转弯就有最近的墙远离）
-        self.current_scan -= (v*0.1)#有v时所有雷达点都减小
+            #定义物理规则（非常暴力前进就有墙靠近，转弯就有最近的墙远离）#新定义
+        self.current_scan -= (v*0.5)#有v时所有雷达点都减小#有v时前方距离减小
+        """
+        if w> 0.3:#左转
+            self.current_scan[2] = min(self.current_scan[2],self.current_scan[0])# 前面的墙跑到右边去了
+            self.current_scan[0] = 10.0# 前面空了
+        elif w< -0.3:# 右转
+            self.current_scan[1] = min(self.current_scan[1],self.current_scan[0])
+            self.current_scan[0] = 10.0
+
+"""
         min_idx = np.argmin(self.current_scan)#找出最近的墙
         if abs(w)>= 0.2:
             self.current_scan[min_idx]+=abs(w)*0.2#远离最近的墙
+            
             
             #加点噪音和限幅
         self.current_scan += np.random.normal(0,0.05,24)
@@ -60,13 +70,13 @@ class simplelidarenv(gym.Env):
 
         reward += v*1.0#跑得快加分
 
-        reward -= abs(w)*0.05#转弯多扣分
+        reward -= abs(w)*0.5#转弯多扣分
 
         if min_dis <= 0.5:#撞墙似了扣50
-            reward -= 200
+            reward -= 50
             terminated = True
         elif min_dis <= 1.0:#太近了也扣分
-            reward -= (1.0/min_dis)*18.0
+            reward -= (1.0/min_dis)*1.0
             
         truncated = self.step_count >= 500
 
@@ -80,8 +90,8 @@ if __name__ == '__main__':
     model = PPO("MlpPolicy",env,verbose=1,learning_rate=0.0003)# verbose=1 打印日志
 
     model.learn(total_timesteps=200000)
-    model.save("/home/liu/learn/ros2/models/test_model.zip")
-    print("训练完成保存为/home/liu/learn/ros2/models/test_model.zip")
+    model.save("/home/liu/learn/ros2/models/test_model24.zip")
+    print("训练完成保存为/home/liu/learn/ros2/models/test_model24.zip")
 
         
 

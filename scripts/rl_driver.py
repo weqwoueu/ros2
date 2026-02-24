@@ -11,7 +11,7 @@ class aidriver(Node):
         super().__init__('rl_driver')
 
         #加载训练好的模型
-        modle_path = "/home/liu/learn/ros2/models/test_model.zip" #modle路径
+        modle_path = "/home/liu/learn/ros2/models/test_model24.zip" #modle路径
 
         try:
             self.model = PPO.load(modle_path)
@@ -30,7 +30,18 @@ class aidriver(Node):
         #ranges = [l if l<=10.0 else 10.0 for l in msg.ranges]#转inf 为 10.0
         ranges_np =np.array(msg.ranges)
         ranges_np = np.nan_to_num(ranges_np ,posinf=10.0)#np写法意思同上#转inf 为 10.0
+        """
+        #三输出版本
+        #雷达正前方为小车正右方
+        frontmin = np.min(ranges_np[60:120])
+        leftmin = np.min(ranges_np[120:180])
+        rightmin = np.min(ranges_np[0:60])
 
+        observation = np.array([frontmin,leftmin,rightmin],dtype=np.float32)
+"""
+
+
+        #24输出版本
         step = len(ranges_np)//24
         observation = []
         for i in range(0 , len(ranges_np), step):
@@ -41,6 +52,8 @@ class aidriver(Node):
                 observation.append(10.0)
         observation = np.array(observation[:24])#防止obser爆格曲前24个
         # action是 [-1, 1] 之间的浮点数
+
+        
         action ,_states = self.model.predict(observation , deterministic=True)# deterministic=True: 考试模式，不要随机探索，选概率最大的动作
         cmd = Twist()#创建空白指令
 
@@ -52,8 +65,8 @@ class aidriver(Node):
             raw_linear = action[0]
 
         #np.clip(数据, 最小值, 最大值) 限幅
-        cmd.angular.z = np.clip(raw_angular,-1.0,1.0)*1.0
-        cmd.linear.x = np.clip(raw_linear,0.0,1.0)*0.6
+        cmd.angular.z = np.clip(raw_angular,-1.0,1.0)*10
+        cmd.linear.x = np.clip(raw_linear,0.0,1.0)*0.5
 
         self.publisher.publish(cmd)
 
